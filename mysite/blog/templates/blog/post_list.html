@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Mój blog</title>
+  </head>
+  <body>
+      <p>Witaj na moim blogu. </p>
+      {% for post in posts %}
+        <p><h2>Tytuł:{{post.title}}</h2></p>
+        <p>{{post.slug}}
+        <p>{{post.publish}}
+      {% endfor %}
+
+      <p>Widok "post_list"</p>
+</html>
