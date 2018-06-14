@@ -8,3 +8,7 @@ def post_list(request):# wyświetla listę WSZYSTKICH postów
 
 def main_site(request):
     return render(request, 'blog/main_site.html', {})
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'blog/post_detail.html', {'post':post})
