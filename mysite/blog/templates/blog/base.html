@@ -1,0 +1,26 @@
+<! DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+      <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+      <title>Mój blog</title>
+  </head>
+
+  <body>
+    <div id="header">
+      <p><a href="{% url 'main_site' %}">Mój pierwszy blog!<a/></p>
+    </div>
+    <div id ="sidebar">
+      {% block sidebar %}
+      <ul>
+        <li><a href="{% url 'main_site' %}">Strona główna</a></li>
+        <li><a href="{% url 'post_list' %}">Lista postów</a></li>
+      </ul>
+      {% endblock %}
+    </div>
+
+    <div id="content">
+      {% block content%} {% endblock %}
+    </div>
+  </body>
+</html>
