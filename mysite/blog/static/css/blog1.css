@@ -9,7 +9,8 @@ a {
   font-family:cursive;
   background-color:  #00b8e6;
   border: 4px solid black;
-  position: fixed;
+  position: static;
+  display: block;
 
 }
 body .header {
@@ -33,6 +34,7 @@ body .content .main_site {
   color: black;
   font-size: 10px;
   font-family: serif;
+  display: block;
 
 }
 
