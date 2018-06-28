@@ -2,10 +2,13 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-    <p id="content_header">Lista opublikowanych postów:</p>
+    <div class="content_header">Lista opublikowanych postów:</div>
     {% for post in posts %}
-      <p><h2><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h2></p>
+    <div class="posts">
+      <p id="title"><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></p>
       <p>{{post.slug}}
       <p>{{post.publish}}
+    </div>
     {% endfor %}
+    {% include "blog/pagination.html" with page=page_obj %}
 {% endblock %}

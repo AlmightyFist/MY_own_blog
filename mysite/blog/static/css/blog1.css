@@ -1,0 +1,55 @@
+a {
+  text-decoration: none;
+}
+
+#sidebar {
+  height: 400px;
+  width: 150p;
+  float:right;
+  font-family:cursive;
+  background-color:  #00b8e6;
+  border: 4px solid black;
+  position: fixed;
+
+}
+body .header {
+ text-align: center;
+ padding: 20px 20px 20px 40px;
+ background-color: #80e5ff;
+ border: 4px solid black;
+}
+
+body .header a {
+  color: black;
+  font-family:fantasy;
+  font-size:40px;
+}
+body .content {
+  text-align: center;
+  position: static;
+}
+
+body .content .main_site {
+  color: black;
+  font-size: 10px;
+  font-family: serif;
+
+}
+
+body .content .content_header {
+  color: red;
+  font-size: 20px;
+  font-family: fantasy;
+}
+
+body .content .posts {
+  color: black;
+  font-size: 15px;
+  font-family: monospace;
+
+}
+
+body .content .posts #title {
+  font-weight: bold;
+  font-size: 17px;
+}

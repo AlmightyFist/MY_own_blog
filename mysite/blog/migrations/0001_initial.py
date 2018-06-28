@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('publish_date', models.DateTimeField(blank=True, null=True)),
                 ('create_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('status', models.CharField(max_length=20, choices=[('draft', 'Roboczy'), ('published', 'Opublikowany')])),
-                ('author', models.ForeignKey(related_name='blog_posts', to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(related_name='blog_posts', to=settings.AUTH_USER_MODEL,on_delete=models.CASCADE)),
             ],
         ),
     ]

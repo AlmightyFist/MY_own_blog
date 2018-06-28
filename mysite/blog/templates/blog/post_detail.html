@@ -1,5 +1,14 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-<p> {{post.body_text}} </p>
+ {% if user.is_authenticated %}
+  <p> <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></p>
+ {% endif %}
+  <p> <h1 class="post_title"> {{post.title}}</h1></p>
+  <p> <h5 class="post_text"> {{post.body_text|linebreaksbr}}</h5> </p>
+  <p>
+    <a href="{% url 'post_share' post.id %}">
+      Udostępnij post
+    </a>
+  </p>
 {% endblock %}

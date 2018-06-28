@@ -2,13 +2,18 @@
 {% load staticfiles %}
 <html>
   <head>
-      <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="{% static 'css/blog1.css' %}" />
       <title>Mój blog</title>
   </head>
 
   <body>
-    <div id="header">
+    <div class="header">
       <p><a href="{% url 'main_site' %}">Mój pierwszy blog!<a/></p>
+     {% if user.is_authenticated %}
+      <p><a href="{% url 'post_new' %}" class = "top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+     {% endif %}
     </div>
     <div id ="sidebar">
       {% block sidebar %}
@@ -19,7 +24,7 @@
       {% endblock %}
     </div>
 
-    <div id="content">
+    <div class="content">
       {% block content%} {% endblock %}
     </div>
   </body>
