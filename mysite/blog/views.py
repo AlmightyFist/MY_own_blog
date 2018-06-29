@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.core.paginator  import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .forms import PostForm, EmailPostForm
 from django.shortcuts import redirect
 from django.utils import timezone
@@ -10,12 +10,15 @@ from django.core.mail import send_mail
 
 # Create your views here.
 class PostListView(ListView):
-    queryset = Post.objects.filter(status='published')
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog/post_list.html'
 
-def post_list(request):# wyświetla listę WSZYSTKICH postów
+    def get_queryset(self):
+        posts = Post.objects.filter(status='published').order_by('-publish')
+        return posts
+
+"""def post_list(request):# wyświetla listę WSZYSTKICH postów
     object_list = Post.objects.filter(status='published')
     paginator = Paginator(object_list,3) # trzy posty na stronie
     page = request.GET.get('page')
@@ -25,14 +28,20 @@ def post_list(request):# wyświetla listę WSZYSTKICH postów
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'blog/post_list.html', {'page':page,'posts':posts} )
+    return render(request, 'blog/post_list.html', {'page':page,'posts':posts} )"""
 
 def main_site(request):
     return render(request, 'blog/main_site.html', {})
 
-def post_detail(request, pk):
+"""def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post':post})
+    return render(request, 'blog/post_detail.html', {'post':post})"""
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
+
 
 def post_new(request):
         if request.method == "POST":
