@@ -9,6 +9,7 @@ urlpatterns = [
     path('post/new/$', views.post_new, name ='post_new'),
     path('post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
     path('(?P<pk>\d+)/share/$', views.post_share,name='post_share'),
+    path('post/(?P<pk>\d+)/vote/$', views.vote, name='post_vote'),
 ]
 """urlpatterns = [
     url(r'^post_list/', views.PostListView.as_view(), name='post_list'),

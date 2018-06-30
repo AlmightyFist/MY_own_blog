@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Post, Score
 from django.core.paginator  import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from .forms import PostForm, EmailPostForm
@@ -66,10 +66,22 @@ def post_edit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('blog/post_detail.html', pk=post.pk)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def vote(request,pk):
+    PostScore = get_object_or_404(Post, pk = pk)
+    try:
+        Score.objects.create(PostScore = PostScore, value =int(request.POST['score']) )
+    except (KeyError, Score.DoesNotExist):
+        return render(request, 'blog/post_detail.html', {'post':PostScore, 'error_message':" Proszę zaznaczyć ocenę postu"})
+
+
+    return render(request, 'blog/post_detail.html', {'post':PostScore})
+
+
 
 def post_share(request, pk):
     post = get_object_or_404(Post, pk=pk, status='published')

@@ -1,5 +1,4 @@
 {% extends "blog/base.html" %}
-
 {% block content %}
  {% if user.is_authenticated %}
   <p> <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></p>
@@ -7,8 +6,30 @@
   <p> <h1 class="post_title"> {{post.title}}</h1></p>
   <p> <h5 class="post_text"> {{post.body_text|linebreaksbr}}</h5> </p>
   <p>
-    <a href="{% url 'post_share' post.id %}">
+    <a href="{% url 'post_share'  post.id %}">
       Udostępnij post
     </a>
   </p>
+  <p>Jak oceniasz mój post?</p>
+  {% if error_message %}<p><strong>{{ error_message}}</strong><p>{% endif %}
+  <div class = "vote">
+    <form action="{% url 'post_vote' pk=post.id %}" method="post">
+    {% csrf_token %}
+      <div class = "vote_butt">
+        <input type="radio" name="score" id="0" value="0"/>
+        <label for="0">0</label>
+        <input type="radio" name="score" id="1" value="1"/>
+        <label for="1">1</label>
+        <input type="radio" name="score" id="2" value="2"/>
+        <label for="2">2</label>
+        <input type="radio" name="score" id="3" value="3"/>
+        <label for="3">3</label>
+        <input type="radio" name="score" id="4" value="4"/>
+        <label for="4">4</label>
+        <input type="radio" name="score" id="5" value="5"/>
+        <label for="5">5</label>
+      </div>
+      <input type="submit" value="Głosuj"/>
+    </form>
+  </div>
 {% endblock %}
