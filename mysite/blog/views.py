@@ -6,6 +6,7 @@ from .forms import PostForm, EmailPostForm
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.db.models import Avg
 
 
 # Create your views here.
@@ -78,8 +79,11 @@ def vote(request,pk):
     except (KeyError, Score.DoesNotExist):
         return render(request, 'blog/post_detail.html', {'post':PostScore, 'error_message':" Proszę zaznaczyć ocenę postu"})
 
-
-    return render(request, 'blog/post_detail.html', {'post':PostScore})
+    scores = PostScore.score_set.all().aggregate(Avg('value'))['value__avg']
+    score_number = Score.objects.filter(PostScore__id =pk).count()
+    PostScore.avr_score = scores
+    PostScore.save()
+    return render(request, 'blog/post_detail.html', {'post':PostScore, 'inf_message':"Dziękuję za Twój głos!", 'scores':scores, 'score_number':score_number})
 
 
 

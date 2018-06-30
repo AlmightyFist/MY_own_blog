@@ -12,6 +12,7 @@
   </p>
   <p>Jak oceniasz mój post?</p>
   {% if error_message %}<p><strong>{{ error_message}}</strong><p>{% endif %}
+  {% if inf_message %}<p><strong>{{ inf_message }}</strong><p>{% endif %}
   <div class = "vote">
     <form action="{% url 'post_vote' pk=post.id %}" method="post">
     {% csrf_token %}
@@ -31,5 +32,7 @@
       </div>
       <input type="submit" value="Głosuj"/>
     </form>
+    <a>Średnia ocena postu: {{ post.avr_score}}</a>
+    <a>Liczba oddanych głosów: {{ score_number}} </a>
   </div>
 {% endblock %}
