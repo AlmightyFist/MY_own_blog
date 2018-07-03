@@ -70,20 +70,20 @@ def post_edit(request, pk):
             return redirect('blog/post_detail.html', pk=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form, 'post':post})
 
 def vote(request,pk):
     PostScore = get_object_or_404(Post, pk = pk)
     try:
-        Score.objects.create(PostScore = PostScore, value =int(request.POST['score']) )
+        Score.objects.create(PostScore = PostScore, value =int(request.POST['score']) )# Tworzenie instancji modelu Score, request.POST pobiera dane przekazane przez "value" input
     except (KeyError, Score.DoesNotExist):
         return render(request, 'blog/post_detail.html', {'post':PostScore, 'error_message':" Proszę zaznaczyć ocenę postu"})
 
-    scores = PostScore.score_set.all().aggregate(Avg('value'))['value__avg']
-    score_number = Score.objects.filter(PostScore__id =pk).count()
-    PostScore.avr_score = scores
-    PostScore.save()
-    return render(request, 'blog/post_detail.html', {'post':PostScore, 'inf_message':"Dziękuję za Twój głos!", 'scores':scores, 'score_number':score_number})
+    PostScore.avr_score  = PostScore.score_set.all().aggregate(Avg('value'))['value__avg'] #wyszukuje średnią wszystkich ocen dla postu
+    score_number = Score.objects.filter(PostScore__id =pk).count() # Zlicza sumę Score dla danego Post
+
+    PostScore.save() #zaktualizowanie średniej punktów po każdym wywowałniu oceny
+    return render(request, 'blog/post_detail.html', {'post':PostScore, 'inf_message':"Dziękuję za Twój głos!", 'scores':PostScore.avr_score, 'score_number':score_number})
 
 
 

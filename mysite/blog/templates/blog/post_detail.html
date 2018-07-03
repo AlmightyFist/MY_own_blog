@@ -32,7 +32,9 @@
       </div>
       <input type="submit" value="Głosuj"/>
     </form>
-    <a>Średnia ocena postu: {{ post.avr_score}}</a>
-    <a>Liczba oddanych głosów: {{ score_number}} </a>
+    <a>Średnia ocena postu: {{ post.avr_score|floatformat:2 }}</a>
+    {% if score_number %}
+    <a>Liczba oddanych głosów: {{ score_number }} </a>
+    {% endif %}
   </div>
 {% endblock %}

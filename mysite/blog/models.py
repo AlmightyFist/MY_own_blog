@@ -14,7 +14,7 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length = 20, choices= TABLE_OF_CHOICES, default = 'draft'  )
-    avr_score = models.FloatField(default = 0.0)
+    avr_score = models.DecimalField(max_digits=3, decimal_places=1)
 
     def published(self):
         self.publish = timezone.now()
