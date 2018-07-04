@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Score
+from .models import Post, Score, Comment
 # Register your models here.
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'author', 'publish', 'created', 'status', 'avr_score')
@@ -8,3 +8,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Score)
+admin.site.register(Comment)

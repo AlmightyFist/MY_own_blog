@@ -14,7 +14,7 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length = 20, choices= TABLE_OF_CHOICES, default = 'draft'  )
-    avr_score = models.DecimalField(max_digits=3, decimal_places=1)
+    avr_score = models.DecimalField(max_digits=3, decimal_places=1, null = True)
 
     def published(self):
         self.publish = timezone.now()
@@ -26,3 +26,10 @@ class Post(models.Model):
 class Score(models.Model):
     PostScore = models.ForeignKey(Post,on_delete=models.CASCADE)
     value = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
+
+class Comment(models.Model):
+    PostComment = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body_text = body_text = models.TextField()
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(default=timezone.now)

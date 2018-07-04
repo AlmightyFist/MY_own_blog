@@ -6,10 +6,15 @@
   <p> <h1 class="post_title"> {{post.title}}</h1></p>
   <p> <h5 class="post_text"> {{post.body_text|linebreaksbr}}</h5> </p>
   <p>
-    <a href="{% url 'post_share'  post.id %}">
-      Udostępnij post
-    </a>
+    <a href="{% url 'post_share'  post.id %}">Udostępnij post</a>
   </p>
+  <p><h3>Komentarze</h3></p>
+  <p> <a class="comment-btn" href ="{% url 'add_comment' pk=post.pk %}">Dodaj komentarz</a></p>
+  {% for comment in comments %}
+   <div class="comment">
+    <p>{{ comment.body_text }}</p>
+  </div>
+  {% endfor %}
   <p>Jak oceniasz mój post?</p>
   {% if error_message %}<p><strong>{{ error_message}}</strong><p>{% endif %}
   {% if inf_message %}<p><strong>{{ inf_message }}</strong><p>{% endif %}
