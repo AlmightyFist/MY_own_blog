@@ -11,8 +11,15 @@
   <p><h3>Komentarze</h3></p>
   <p> <a class="comment-btn" href ="{% url 'add_comment' pk=post.pk %}">Dodaj komentarz</a></p>
   {% for comment in comments %}
-   <div class="comment">
-    <p>{{ comment.body_text }}</p>
+  <div class="comment">
+     <div class="comment_info_div">
+      <p class="info"> Komentarz {{ forloop.counter }} dodany przez {{comment.author}}, {{ comment.publish}}</p>
+     </div>
+    <div class="comment_text_div">
+      <p class="comment_text">{{ comment.body_text|linebreaks}}</p>
+    </div>
+  {% empty %}
+    <p> Nie ma jeszcze żadnych komentarzy </p>
   </div>
   {% endfor %}
   <p>Jak oceniasz mój post?</p>

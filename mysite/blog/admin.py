@@ -6,6 +6,11 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('status', 'created', 'publish', 'author')
     search_fields = ('title', 'body_text')
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('author', 'publish', 'created', 'PostComment')
+    list_filter = ('author', 'PostComment')
+    search_fields = ('author', 'PostComment')
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Score)
-admin.site.register(Comment)
+admin.site.register(Comment, CommentAdmin)

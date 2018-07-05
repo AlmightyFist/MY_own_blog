@@ -30,6 +30,6 @@ class Score(models.Model):
 class Comment(models.Model):
     PostComment = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body_text = body_text = models.TextField()
+    body_text = body_text = models.TextField('Treść komentarza')
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(default=timezone.now)

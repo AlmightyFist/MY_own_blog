@@ -55,3 +55,13 @@ body .content .posts #title {
   font-weight: bold;
   font-size: 17px;
 }
+
+body .content .comment .comment_info_div {
+  border: 2px solid black;
+  background-color:#b4aeae;
+
+}
+body .content .comment {
+  border: 4px solid black;
+
+}
