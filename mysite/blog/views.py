@@ -21,15 +21,15 @@ from taggit.models import Tag
         return posts"""
 
 def post_list(request, tag_slug = None):# wyświetla listę WSZYSTKICH postów
-    object_list = Post.objects.filter(status='published')
-    page = request.GET.get('page')
+    object_list = Post.objects.filter(status='published') #Queryset, wybiera OPUBLIKOWANE POSTY
+    page = request.GET.get('page') #Potrzebne do funkcji PAGINATOR
     tag = None
 
-    if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
-        object_list = object_list.filter(tags__in=[tag])
+    if tag_slug: #if działajace jeżeli z URL przekazywany jest TAG
+        tag = get_object_or_404(Tag, slug=tag_slug) #pobiera odpowiedni obiekt modelu TAG z modułu TAGGIT
+        object_list = object_list.filter(tags__in=[tag]) #filtruje wygenerowany QUeryset na podstawie przesłanego TAGu
 
-    paginator = Paginator(object_list,3) # trzy posty na stronie
+    paginator = Paginator(object_list,3) # trzy posty na stronie, na podstawie wygenerowanego Querysetu
 
     try:
         posts = paginator.page(page)
@@ -43,8 +43,8 @@ def main_site(request):
     return render(request, 'blog/main_site.html', {})
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    comments = Comment.objects.filter(PostComment__id =pk)
+    post = get_object_or_404(Post, pk=pk) #Pobiera objekt posta na podstawie pobranego ID
+    comments = Comment.objects.filter(PostComment__id =pk) # Tworzy Queryset komentarzy do pobranego posta
     return render(request, 'blog/post_detail.html', {'post':post, 'comments':comments})
 
 """class PostDetailView(DetailView):
@@ -53,16 +53,16 @@ def post_detail(request, pk):
     context_object_name = 'post'"""
 
 def post_new(request):
-        if request.method == "POST":
-            form= PostForm(request.POST)
-            if form.is_valid():
+        if request.method == "POST": #Jeżeli formularz został uzupełniony i przesłany za pomocą metody POST, nastepuje wykonanie IF
+            form= PostForm(request.POST) #tworzy formularz z danymi pobranymi za pomocą metody POST
+            if form.is_valid(): # wykonane jeżeli formualrz jest uzupełniony prawidłowo
                 post = form.save(commit=False)
-                post.author = request.user
+                post.author = request.user #pobranie danych aktualnie zalogowanego użytkownika
                 post.publish = timezone.now()
                 post.save()
                 return redirect('post_detail', pk=post.pk)
 
-        else:
+        else: # jeżeli widok jest wywołany bez funkcji POST utworzony zostaje pusty formularz
             form = PostForm()
         return render(request, 'blog/post_edit.html', {'form':form})
 
@@ -82,7 +82,7 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html', {'form': form, 'post':post})
 
 def vote(request,pk):
-    PostScore = get_object_or_404(Post, pk = pk)
+    PostScore = get_object_or_404(Post, pk = pk)# pobranie obiektu POST na podstawie przesłanego ID
     try:
         Score.objects.create(PostScore = PostScore, value =int(request.POST['score']) )# Tworzenie instancji modelu Score, request.POST pobiera dane przekazane przez "value" input
     except (KeyError, Score.DoesNotExist):
@@ -115,7 +115,7 @@ def post_share(request, pk):
         form = EmailPostForm()
     return render(request, 'blog/share.html', {'post':post, 'form':form, 'sent':sent})
 
-def add_comment(request, pk):
+def add_comment(request, pk): #dodawanie komantarza do POSTu
     post = get_object_or_404(Post, pk=pk)
     comments = Comment.objects.filter(PostComment__id =pk)
     if request.method == "POST":
