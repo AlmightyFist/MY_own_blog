@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from django.db.models import Avg
 from taggit.models import Tag
+from django.db.models import Count
 
 
 # Create your views here.
@@ -45,7 +46,12 @@ def main_site(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk) #Pobiera objekt posta na podstawie pobranego ID
     comments = Comment.objects.filter(PostComment__id =pk) # Tworzy Queryset komentarzy do pobranego posta
-    return render(request, 'blog/post_detail.html', {'post':post, 'comments':comments})
+
+    post_tags_ids = post.tags.values_list('id', flat = True) #pobranie listy Pythona zawierającej identyfikatory dla tagów bieżącego posta. Wartością zwrotną są krotki z wartościami pochodzącymi z danych pól. Przy użyciu flat = True output wygląda tak: [1, 2, 3,...]
+    similar_posts = Post.objects.filter(status='published')
+    similar_posts = similar_posts.filter(tags__in = post_tags_ids).exclude(id=post.id) # pobranie wszystkich postów zawierajacy dowolny z otrzymanych wcześniej tagów z wyłączeniem bieżącego posta
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags','-publish')[:4] #funkcja agregacji Count() generuje pole same_tags, zawierające listę tagów współdzielonych ze wszystkimi sprawzanymi tagami. WYniki ułożone w kolejności współdzielonych tagów oraz względem dany opublikowania. Pobieramy jedynie 4 pierwsze posty.
+    return render(request, 'blog/post_detail.html', {'post':post, 'comments':comments, 'similar_posts': similar_posts })
 
 """class PostDetailView(DetailView):
     model = Post

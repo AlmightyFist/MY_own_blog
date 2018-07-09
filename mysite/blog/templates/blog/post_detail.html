@@ -49,5 +49,15 @@
     {% if score_number %}
     <a>Liczba oddanych głosów: {{ score_number }} </a>
     {% endif %}
+
+    <h2> Podobne posty </h2>
+    {% for post in similar_posts %}
+      <p>
+        <a href="{% url 'post_detail' pk=post.pk %}"> {{ post.title }} </a>
+      </p>
+      {% empty %}
+       Nie ma podobnych postów
+    {% endfor %}
+
   </div>
 {% endblock %}
