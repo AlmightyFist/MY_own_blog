@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from taggit.managers import TaggableManager
+
 
 
 # Create your models here.
@@ -14,7 +16,8 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length = 20, choices= TABLE_OF_CHOICES, default = 'draft'  )
-    avr_score = models.DecimalField(max_digits=3, decimal_places=1, null = True)
+    avr_score = models.DecimalField(max_digits=3, decimal_places=1, null = True, blank=True)
+    tags = TaggableManager()
 
     def published(self):
         self.publish = timezone.now()
