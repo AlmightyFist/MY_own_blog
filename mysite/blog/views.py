@@ -22,7 +22,7 @@ from django.db.models import Count
         return posts"""
 
 def post_list(request, tag_slug = None):# wyświetla listę WSZYSTKICH postów
-    object_list = Post.objects.filter(status='published') #Queryset, wybiera OPUBLIKOWANE POSTY
+    object_list = Post.objects.filter(status='published').order_by('-publish') #Queryset, wybiera OPUBLIKOWANE POSTY
     page = request.GET.get('page') #Potrzebne do funkcji PAGINATOR
     tag = None
 
@@ -31,7 +31,6 @@ def post_list(request, tag_slug = None):# wyświetla listę WSZYSTKICH postów
         object_list = object_list.filter(tags__in=[tag]) #filtruje wygenerowany QUeryset na podstawie przesłanego TAGu
 
     paginator = Paginator(object_list,3) # trzy posty na stronie, na podstawie wygenerowanego Querysetu
-
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -41,6 +40,8 @@ def post_list(request, tag_slug = None):# wyświetla listę WSZYSTKICH postów
     return render(request, 'blog/post_list.html', {'page':page,'posts':posts, 'tag': tag} )
 
 def main_site(request):
+
+
     return render(request, 'blog/main_site.html', {})
 
 def post_detail(request, pk):

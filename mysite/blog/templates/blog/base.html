@@ -21,10 +21,12 @@
         <h2>Mój blog</h2>
         <h3>Najnowsze posty</h3>
         {% show_latest_posts 3 %}
-      <ul>
+        <h3> Posty najwyżej punktowane</h3>
+        {% highest_scores 3 %}
+      <h3><ul>
         <li><a href="{% url 'main_site' %}">Strona główna</a></li>
         <li><a href="{% url 'post_list' %}">Lista postów</a></li>
-      </ul>
+      </ul></h3>
 
       {% endblock %}
     </div>

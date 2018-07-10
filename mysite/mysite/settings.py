@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'blog',
     'polls',
     'taggit',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 )
 
 """MIDDLEWARE_CLASSES = (

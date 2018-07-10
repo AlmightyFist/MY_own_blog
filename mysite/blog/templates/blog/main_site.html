@@ -2,13 +2,11 @@
 {% block content%}
 <div class="main_site">
   <h1>
-      <p>Jest to strona startowa mojego nowego bloga </p>
-      <p> Z czasem będę ją rozbudowywał</p>
-      <p> Z prawej strony umieszczony jest pasek pozwalający na poruszanie się po mojej stronie. </p>
-      <h4><p>:*</p></h4>
-      <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-      </iframe>
-
+    <ul>
+      {% for category in categories %}
+        <li> {{category.CategoryName}}</li>
+      {% endfor %}
+    </ul>
   </h1>
 </div>
   {% endblock %}

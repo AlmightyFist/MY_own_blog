@@ -3,8 +3,8 @@ a {
 }
 
 #sidebar {
-  height: 400px;
-  width: 150p;
+  height: 800px;
+  width: 300px;
   float:right;
   font-family:cursive;
   background-color:  #00b8e6;
@@ -48,6 +48,7 @@ body .content .posts {
   color: black;
   font-size: 15px;
   font-family: monospace;
+  border: 1px dashed black;
 
 }
 

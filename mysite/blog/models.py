@@ -6,7 +6,8 @@ from taggit.managers import TaggableManager
 
 
 
-# Create your models here.
+
+
 class Post(models.Model):
     TABLE_OF_CHOICES = (('draft','Roboczy'),('published','Opublikowany'),)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -18,6 +19,7 @@ class Post(models.Model):
     status = models.CharField(max_length = 20, choices= TABLE_OF_CHOICES, default = 'draft'  )
     avr_score = models.DecimalField(max_digits=3, decimal_places=1, null = True, blank=True)
     tags = TaggableManager()
+
 
     def published(self):
         self.publish = timezone.now()
@@ -33,6 +35,6 @@ class Score(models.Model):
 class Comment(models.Model):
     PostComment = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body_text = body_text = models.TextField('Treść komentarza')
+    body_text  = models.TextField('Treść komentarza')
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(default=timezone.now)

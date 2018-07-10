@@ -1,0 +1,7 @@
+<ul>
+  {% for post in highest_scores %}
+    <li>
+      <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}: {{post.avr_score}}</a>
+    </li>
+  {% endfor %}
+</ul>
