@@ -1,12 +1,10 @@
 {% extends "blog/base.html" %}
+{% load blog_tags %}
 {% block content%}
 <div class="main_site">
-  <h1>
-    <ul>
-      {% for category in categories %}
-        <li> {{category.CategoryName}}</li>
-      {% endfor %}
-    </ul>
-  </h1>
+  <h1> Kategorie postów na blogu </h1>
+    <h2>
+      {% categories %}
+    </h2>
 </div>
   {% endblock %}

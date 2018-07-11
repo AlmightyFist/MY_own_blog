@@ -5,6 +5,7 @@ import markdown
 register = template.Library()
 
 from ..models import Post
+from ..models import Category
 @register.simple_tag
 def total_posts():
     return Post.objects.filter(status='published').count()
@@ -22,3 +23,8 @@ def highest_scores(count=5):
 @register.filter(name='markdown') #customowy fiiltr tekstu w HTMLu
 def markdown_format(text):
     return mark_safe(markdown.markdown(text))
+
+@register.inclusion_tag('blog/blog_categories.html')
+def categories():
+    categories = Category.objects.all()
+    return {'categories':categories}

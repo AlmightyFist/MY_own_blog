@@ -11,7 +11,8 @@ urlpatterns = [
     path('/(?P<int:pk>\d+)/share/$', views.post_share,name='post_share'),
     path('post/(?P<int:pk>\d+)/vote/$', views.vote, name='post_vote'),
     path('post/(?P<int:pk>\d+)/add_comment/$',views.add_comment, name='add_comment'),
-    path('tag/(?P<tag_slug>[-\w]+)/$', views.post_list, name='post_list_by_tag')
+    path('tag/(?P<tag_slug>[-\w]+)/$', views.post_list, name='post_list_by_tag'),
+    path('category/(?P<int:pk>\d+)/$', views.category_posts, name ='category_posts'),
 ]
 """urlpatterns = [
     url(r'^post_list/', views.PostListView.as_view(), name='post_list'),

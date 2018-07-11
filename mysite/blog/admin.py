@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Score, Comment
+from .models import Post, Score, Comment, Category
 # Register your models here.
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'author', 'publish', 'created', 'status', 'avr_score')
@@ -14,3 +14,4 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 admin.site.register(Score)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Category)

@@ -5,7 +5,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title','body_text')
+        fields = ('title','body_text','tags',"category")
 
 class EmailPostForm(forms.Form):
     name = forms.CharField(max_length=25)

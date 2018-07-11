@@ -1,7 +1,10 @@
 <ul>
   {% for post in highest_scores %}
+
     <li>
+      {% if post.avr_score%}
       <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}: {{post.avr_score}}</a>
+      {% endif %}
     </li>
   {% endfor %}
 </ul>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Score, Comment
+from .models import Post, Score, Comment, Category
 from django.core.paginator  import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from .forms import PostForm, EmailPostForm, CommentForm
@@ -66,6 +66,7 @@ def post_new(request):
                 post = form.save(commit=False)
                 post.author = request.user #pobranie danych aktualnie zalogowanego użytkownika
                 post.publish = timezone.now()
+                post.status = 'published'
                 post.save()
                 return redirect('post_detail', pk=post.pk)
 
@@ -138,3 +139,9 @@ def add_comment(request, pk): #dodawanie komantarza do POSTu
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment.html', {'form':form, 'post':post})
+
+def category_posts(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    posts = category.post_set.all().order_by('-publish')
+
+    return render (request, 'blog/category_posts.html', {'posts': posts})

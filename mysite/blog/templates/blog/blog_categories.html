@@ -1,0 +1,5 @@
+<ul>
+  {% for category in categories %}
+    <li><a href="{% url 'category_posts' pk=category.pk %}"> {{category.ClassName}} </a></li>
+  {% endfor %}
+</ul>

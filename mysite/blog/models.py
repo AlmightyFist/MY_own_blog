@@ -6,11 +6,16 @@ from taggit.managers import TaggableManager
 
 
 
+class Category(models.Model):
+    ClassName = models.CharField(max_length = 100)
 
+    def __str__(self):
+        return self.ClassName
 
 class Post(models.Model):
     TABLE_OF_CHOICES = (('draft','Roboczy'),('published','Opublikowany'),)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,null = True, on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish')
     body_text = models.TextField()
