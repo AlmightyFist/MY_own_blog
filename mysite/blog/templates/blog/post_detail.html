@@ -2,7 +2,7 @@
 {% block content %}
 {% load blog_tags %}
 
- {% if user.is_authenticated %}
+ {% if user.is_superuser %}
   <p> <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></p>
  {% endif %}
   <p> <h1 class="post_title"> {{post.title}}</h1></p>

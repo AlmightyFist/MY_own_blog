@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.urls import reverse_lazy
+
+SITE_ID = 1
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,17 +29,25 @@ SECRET_KEY = '=vwvk=4q8%o_(^decns%jk9k^#$+q9@=j=v1zs*!vl85zo%705'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'fireice93@gmail.com'
 EMAIL_HOST_PASSWORD = 'Imperium01@#$**'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+#AUTHENTICATION
+
+LOGIN_REDIRECT_URL = reverse_lazy('main_site')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('logout')
+
+#EMAIL
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # wyświetlanie maili w powłoce
 
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -47,6 +58,7 @@ INSTALLED_APPS = (
     'taggit',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'django.contrib.admin',
 )
 
 """MIDDLEWARE_CLASSES = (
@@ -62,11 +74,11 @@ INSTALLED_APPS = (
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -100,6 +112,23 @@ DATABASES = {
     }
 }
 
+# Password validation
+# https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

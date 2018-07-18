@@ -12,9 +12,19 @@
   <body>
     <div class="header">
       <p><a href="{% url 'main_site' %}">Mój pierwszy blog! Dotychczas opublikowałem {% total_posts %} postów!<a/></p>
-     {% if user.is_authenticated %}
+     {% if user.is_superuser %}
       <p><a href="{% url 'post_new' %}" class = "top-menu"><span class="glyphicon glyphicon-plus"></span></a>
      {% endif %}
+
+    <div class="login">
+     {% if user.is_authenticated %}
+      <p>Witaj {{user.first_name}}</p>
+      <p><a href = "{% url 'logout' %}">Wyloguj się</a></p>
+     {% else %}
+      <p><a href ="{% url 'login' %}">Zaloguj się</a><p>
+     {% endif %}
+   </div>
+
     </div>
     <div id ="sidebar">
       {% block sidebar %}

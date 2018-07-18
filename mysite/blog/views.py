@@ -2,13 +2,14 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post, Score, Comment, Category
 from django.core.paginator  import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
-from .forms import PostForm, EmailPostForm, CommentForm
+from .forms import PostForm, EmailPostForm, CommentForm, UserRegistrationForm
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.db.models import Avg
 from taggit.models import Tag
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -145,3 +146,20 @@ def category_posts(request, pk):
     posts = category.post_set.all().order_by('-publish')
 
     return render (request, 'blog/category_posts.html', {'posts': posts})
+
+#Rejestracja nowego użytkownika
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            # Utworzenie nowego obiektu użytkownika, bez zapisywania jeszcze w bazie oddanych
+            new_user = user_form.save(commit = False)
+            #Ustawienie wybranego hasła
+            new_user.set_password(user_form.cleaned_data['password']) #specjalna metoda szyfrująca hasło użytkownika
+            #Zapisanie obiektu user
+            new_user.save()
+            return render(request, 'blog/register_done.html',{'new_user':new_user})
+    else:
+        user_form = UserRegistrationForm()
+    return render(request, 'blog/register.html', {'user_form':user_form})
